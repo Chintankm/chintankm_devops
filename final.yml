@@ -28,5 +28,5 @@
 
            - template:
                    src: /root/1.j2
-                   dest: /home/aniket/master3.conf
+                   dest: /home/aniket/master4.conf
 
