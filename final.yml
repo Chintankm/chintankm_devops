@@ -1,0 +1,32 @@
+ - name: file making
+   hosts: self
+   user: aniket
+   become: false
+   gather_facts: no
+   tasks:
+           - name: get ip
+             shell: ip r | grep -v dhcp | grep ens33 | awk '{print $(NF-2)}'
+             register: iiippprrr
+
+           - shell: mysql -u heal -pHeal@123 heal -s -N -e 'select  account_id from os;' 
+             register: id_comp
+
+           - shell: mysql -u heal -pHeal@123 heal -s -N -e 'select name from os;' 
+             register: name_comp
+
+           - shell: mysql -u heal -pHeal@123 heal -s -N -e 'select version from os;' 
+             register: ver_comp
+
+           - set_fact:
+                   iiippprrr={{ iiippprrr.stdout }}
+           - set_fact:
+                   id_comp={{ id_comp.stdout }}
+           - set_fact:
+                   name_comp={{ name_comp.stdout }}
+           - set_fact:
+                   ver_comp={{ ver_comp.stdout }}
+
+           - template:
+                   src: /root/1.j2
+                   dest: /home/aniket/master3.conf
+
