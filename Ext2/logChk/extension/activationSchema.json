@@ -1,0 +1,124 @@
+{
+  "types": {
+    "dynatrace.datasource.python:log_chker-endpoint": {
+      "type": "object",
+      "displayName": "Log_chker Endpoint",
+      "summaryPattern": "Log_chker {dept_name} - {check_interval}; {log_files} : {log_patterns}",
+      "properties": {
+        "log_files": {
+          "type": "list",
+          "displayName": "Log Files",
+          "metadata": {
+            "addItemButton": "Add Log File"
+          },
+          "minObjects": 1,
+          "items": {
+            "displayName": "Filter by log name list",
+            "nullable": false,
+            "type": "text",
+            "default": "",
+            "constraints": [
+              {
+                "type": "LENGTH",
+                "minLength": 1,
+                "maxLength": 500
+              }
+            ]
+          },
+          "maxItems": 100
+        },
+        "log_patterns": {
+          "type": "list",
+          "displayName": "Log Files Pattern",
+          "metadata": {
+            "addItemButton": "Add Log File Pattern"
+          },
+          "minObjects": 1,
+          "items": {
+            "displayName": "Filter by pattern name list",
+            "nullable": false,
+            "type": "text",
+            "default": "",
+            "constraints": [
+              {
+                "type": "LENGTH",
+                "minLength": 1,
+                "maxLength": 500
+              }
+            ]
+          },
+          "maxItems": 100
+        },
+        "dept_name": {
+          "displayName": "Department Name",
+          "description": "Name of the department in lowercases and without whitespaces eg : epay,pe2 (Do not special character)",
+          "type": "text",
+          "nullable": false,
+          "default": "",
+          "constraints": [
+            {
+              "type": "LENGTH",
+              "minLength": 1,
+              "maxLength": 500
+            }
+          ],
+          "maxItems": 1
+        },
+        "check_interval": {
+          "displayName": "Interval to Check Logs",
+          "description": "The frequency with which the extension will update log pattern. Interval in minues",
+          "type": "integer",
+          "nullable": false,
+          "default": 1,
+          "constraints": [
+            {
+              "type": "RANGE",
+              "minLength": 1,
+              "maxLength": 24
+            }
+          ],
+          "maxItems": 1
+        }
+      }
+    },
+    "pythonLocal": {
+      "type": "object",
+      "properties": {
+        "endpoints": {
+          "displayName": "Log_chker endpoint",
+          "type": "list",
+          "items": {
+            "type": {
+              "$ref": "#/types/dynatrace.datasource.python:log_chker-endpoint"
+            }
+          },
+          "nullable": false,
+          "minItems": 1,
+          "maxItems": 100,
+          "metaData": {
+            "addItemButton": "Add Log Source and Pattern"
+          }
+        }
+      }
+    }
+  },
+  "dynatrace": "1",
+  "description": "log_chker configuration",
+  "schemaId": "python-extension.activation",
+  "displayName": "log_chker configuration",
+  "ownerProductManagement": "dynatrace",
+  "ownerDevelopment": "dynatrace",
+  "maturity": "GENERAL_AVAILABILITY",
+  "allowedScopes": [
+    "tenant"
+  ],
+  "multiObject": false,
+  "properties": {
+    "pythonLocal": {
+      "displayName": "Python Local Extension",
+      "type": {
+        "$ref": "#/types/pythonLocal"
+      }
+    }
+  }
+}
