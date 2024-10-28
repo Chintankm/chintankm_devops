@@ -1,0 +1,41 @@
+name: custom:logchker
+version: 0.2.5
+minDynatraceVersion: "1.285"
+author:
+  name: "Dynatrace"
+
+
+python:
+  runtime:
+    module: logchker
+    version:
+      min: "3.10"
+
+  activation:
+    local:
+      path: activationSchema.json
+
+#screens:
+#  - entityType: HOST
+#    detailsInjections:
+#      - type: ENTITIES_LIST
+#        key: test
+#    entitiesListCards:
+#      - key: test
+#        displayName: Related log pattern count
+#        description: Patterns detected on this host for logs
+#        pageSize: 25
+#        entitiesLimit: 100
+#        displayCharts: true
+#        enableDetailsExpandability: true
+#        numberOfVisibleCharts: 2
+#        displayIcons: true
+#        columns:
+#          - type: ATTRIBUTE
+#            attribute:
+#              key: pattern
+#              displayName: Pattern Name
+#          - type: ATTRIBUTE
+#            attribute:
+#              key: logfile
+#              displayName: Log File
