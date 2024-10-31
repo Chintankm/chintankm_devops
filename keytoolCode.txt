@@ -5,8 +5,10 @@ awk -v today=$(date +%s) '
         date_str = substr($0, index($0,$10))
         "date -d \"" date_str "\" +%s" | getline valid_until
         if (valid_until < today) {
-            print cn, date_str, " - Expired: 1"
+            cmd = "/opt/dynatrace/oneagent/agent/tools/dynatrace_ingest -v \"test_date,owner=\\\""cn"\\\",valid_until_date=\\\""date_str"\\\" 1\" "
+			system(cmd)
         } else {
-			print cn, date_str, " - Expired: 0"
+			cmd = "/opt/dynatrace/oneagent/agent/tools/dynatrace_ingest -v \"test_date,owner=\\\""cn"\\\",valid_until_date=\\\""date_str"\\\" 0\" "
+			system(cmd)
         }
     }'
