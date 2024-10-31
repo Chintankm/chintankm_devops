@@ -1,12 +1,12 @@
-keytool -list -v -keystore "$keystore" -storepass "$password" | \
+keytool -list -v -keystore samlKeystore.jks -storepass nalle123 | \
 awk -v today=$(date +%s) '
-    /Owner:/ { owner=$0 }
-    /Valid until:/ {
-        date_str = substr($0, index($0,$3))
+    /Owner:/ { owner=$2 }
+    /Valid from:/ {
+        date_str = substr($0, index($0,$10))
         "date -d \"" date_str "\" +%s" | getline valid_until
         if (valid_until < today) {
-            print owner, $0, " - Expired: 1"
+            print owner, date_str, " - Expired: 1"
         } else {
-            print owner, $0, " - Expired: 0"
+			print owner, date_str, " - Expired: 0"
         }
     }'
