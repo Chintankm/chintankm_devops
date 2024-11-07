@@ -13,3 +13,8 @@ awk -v today=$(date +%s) -v last_day=$(date +%s -d "30 Days Ago") '
 			system(cmd)
         }
     }'
+
+
+
+keytool -delete -noprompt -alias ${cert.alias}  -keystore ${keystore.file} 
+-storepass ${keystore.pass}
