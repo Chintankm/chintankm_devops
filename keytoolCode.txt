@@ -1,14 +1,15 @@
 keytool -list -v -keystore samlKeystore.jks -storepass nalle123 | \
-awk -v today=$(date +%s) '
+awk -v today=$(date +%s) -v last_day=$(date +%s -d "30 Days Ago") '
     /Owner:/ { gsub(/.*CN=/,"");gsub(/, .*/,""); cn=$0 }
     /Valid from:/ {
         date_str = substr($0, index($0,$10))
         "date -d \"" date_str "\" +%s" | getline valid_until
         if (valid_until < today) {
-            cmd = "/opt/dynatrace/oneagent/agent/tools/dynatrace_ingest -v \"test_date,owner=\\\""cn"\\\",valid_until_date=\\\""date_str"\\\" 1\" "
+            cmd = "/opt/dynatrace/oneagent/agent/tools/dynatrace_ingest -v \"test_date,owner=\\\""cn"\\\",valid_until_date=\\\""date_str"\\\" 0\" "
 			system(cmd)
         } else {
-			cmd = "/opt/dynatrace/oneagent/agent/tools/dynatrace_ingest -v \"test_date,owner=\\\""cn"\\\",valid_until_date=\\\""date_str"\\\" 0\" "
+			dt_lt = int((valid_until - today) / 86400)
+			cmd = "/opt/dynatrace/oneagent/agent/tools/dynatrace_ingest -v \"test_date,owner=\\\""cn"\\\",valid_until_date=\\\""date_str"\\\" "dt_lt"\" "
 			system(cmd)
         }
     }'
